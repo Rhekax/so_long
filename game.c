@@ -6,7 +6,7 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:34:03 by mdursun           #+#    #+#             */
-/*   Updated: 2025/02/09 18:32:52 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/02/09 18:55:53 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,13 +74,17 @@ int	close1(int keysym, t_vars *vars)
 		free(vars->mlx);
 		exit (0);
 	}
-	if (keysym = XK_w)
-	{
-		vars->img.player.y -= 30;
-		mlx_clear_window(vars->mlx, vars->win);
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->img.map.img, 0, 0);
-		mlx_put_image_to_window(vars->mlx, vars->win, vars->img.player.img, vars->img.player.x, vars->img.player.y);
-	}
+	if (keysym == XK_w)
+		vars->img.player.y -= 64;
+	if (keysym == XK_s)
+		vars->img.player.y += 64;
+	if (keysym == XK_a)
+		vars->img.player.x -= 64;
+	if (keysym == XK_d)
+		vars->img.player.x += 64;
+	mlx_clear_window(vars->mlx, vars->win);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.map.img, 0, 0);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.player.img, vars->img.player.x, vars->img.player.y);
 }
 
 int	main(int argc, char *argv[])
@@ -97,9 +101,9 @@ int	main(int argc, char *argv[])
 	vars.img.player.img = mlx_xpm_file_to_image(vars.mlx, "pacman.xpm", &a , &b);
 	vars.img.map.addr = mlx_get_data_addr(vars.img.map.img, &vars.img.map.bits_per_pixel, &vars.img.map.line_length, &vars.img.map.endian);
 	vars.img.player.addr = mlx_get_data_addr(vars.img.player.img, &vars.img.player.bits_per_pixel, &vars.img.player.line_length, &vars.img.player.endian);
-	for (int y = 0 ; y < 860;y++)
+	for (int y = 0 ; y < 900;y++)
 	{
-			for (int x = 0 ; x < 640;x++)
+			for (int x = 0 ; x < 680;x++)
 			{	
 				my_mlx_pixel_put(&vars.img.map, y + 400, x + 150, create_trgb(0,230,24,46));
 			}
