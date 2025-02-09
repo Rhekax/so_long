@@ -6,7 +6,7 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:34:03 by mdursun           #+#    #+#             */
-/*   Updated: 2025/02/09 16:35:13 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/02/09 18:11:31 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,12 +67,12 @@ int	close1(int keysym, t_vars *vars)
 {
 	if (keysym == XK_Escape)
 	{
+		mlx_destroy_image(vars->mlx, vars->img.img);
 		mlx_destroy_window(vars -> mlx, vars -> win);
-		free(vars->img.img);
 		mlx_destroy_display(vars->mlx);
 		free(vars->mlx);
+		exit (0);
 	}
-	return (0);
 }
 
 int	main(int argc, char *argv[])
