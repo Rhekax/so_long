@@ -6,7 +6,7 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:34:03 by mdursun           #+#    #+#             */
-/*   Updated: 2025/02/09 18:11:31 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/02/09 18:32:52 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,19 @@ int	close1(int keysym, t_vars *vars)
 {
 	if (keysym == XK_Escape)
 	{
-		mlx_destroy_image(vars->mlx, vars->img.img);
+		mlx_destroy_image(vars->mlx, vars->img.map.img);
+		mlx_destroy_image(vars->mlx, vars->img.player.img);
 		mlx_destroy_window(vars -> mlx, vars -> win);
 		mlx_destroy_display(vars->mlx);
 		free(vars->mlx);
 		exit (0);
+	}
+	if (keysym = XK_w)
+	{
+		vars->img.player.y -= 30;
+		mlx_clear_window(vars->mlx, vars->win);
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->img.map.img, 0, 0);
+		mlx_put_image_to_window(vars->mlx, vars->win, vars->img.player.img, vars->img.player.x, vars->img.player.y);
 	}
 }
 
@@ -79,19 +87,25 @@ int	main(int argc, char *argv[])
 {
 	t_vars vars;
 
+	int a = 64;
+	int b = 64;
+	vars.img.player.x = 600;
+	vars.img.player.y = 300;
 	(vars.mlx = mlx_init());
 	(vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!"));
-	vars.img.img = mlx_new_image(vars.mlx, 1920, 1080);
-	vars.img.addr = mlx_get_data_addr(vars.img.img, &vars.img.bits_per_pixel, &vars.img.line_length, &vars.img.endian);
-
+	vars.img.map.img = mlx_new_image(vars.mlx, 1920, 1080);
+	vars.img.player.img = mlx_xpm_file_to_image(vars.mlx, "pacman.xpm", &a , &b);
+	vars.img.map.addr = mlx_get_data_addr(vars.img.map.img, &vars.img.map.bits_per_pixel, &vars.img.map.line_length, &vars.img.map.endian);
+	vars.img.player.addr = mlx_get_data_addr(vars.img.player.img, &vars.img.player.bits_per_pixel, &vars.img.player.line_length, &vars.img.player.endian);
 	for (int y = 0 ; y < 860;y++)
 	{
 			for (int x = 0 ; x < 640;x++)
 			{	
-				my_mlx_pixel_put(&vars.img, y + 400, x + 150, create_trgb(0,230,24,46));
+				my_mlx_pixel_put(&vars.img.map, y + 400, x + 150, create_trgb(0,230,24,46));
 			}
 	}
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.img, 0, 0);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.map.img, 0, 0);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.player.img, vars.img.player.x, vars.img.player.y);
 	mlx_key_hook(vars.win, close1, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
