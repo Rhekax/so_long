@@ -6,12 +6,12 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:34:03 by mdursun           #+#    #+#             */
-/*   Updated: 2025/02/09 18:55:53 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/03/09 17:03:53 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
-
+#include "Get_next_line/get_next_line.h"
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
@@ -25,42 +25,42 @@ int	create_trgb(int t, int r, int g, int b)
 {
 	return (t << 24 | r << 16 | g << 8 | b);
 }
-int	read_lines()
-{
-	char	buf[BUFFERSIZE];
-	int		i;
-	int		line;
-	int		j;
 
-	j = 0;
-	line = 0;
-	i = 1;
-	while (i > 0)
-	{
-		i = read(3, buf, BUFFERSIZE);
-		if (i == -1)
-			exit (1);
-		while (j < BUFFERSIZE)
-		{
-			if (buf[j] == '\n')
-				line++;
-			j++;
-		}
-		if (i == 0 && buf[0] != 0)
-			line++;
-	}
-	return (line);
-}
 void checkmap(int x, int y, char *path)
 {
 	char	**map;
-	int		line;
+	char	*line;
 	int		colmn;
+	int		fd;
+	int		i;
 
-	line = read_lines();
+	i = 0;
 	colmn = 0;
-	if (open(path, O_RDONLY) == -1)
+	fd = open(path, O_RDONLY);
+	if (fd == -1)
 		exit (1);
+	line = get_next_line(fd);
+	while (line[i])
+	{
+		if (line[i] != 49)
+			exit (1);
+		i++;
+	}
+	while (line)
+	{
+		line = get_next_line(fd);
+		colmn++;
+	}
+	if (colmn < 3 )
+		exit (1);
+	map = malloc (sizeof(char *) * colmn);
+	line = get_next_line(fd);
+	while (line)
+	{
+		*map = malloc (ft_strlen(line));
+		ft_strncpy (*map, line, ft_strlen(line));
+		line = get_next_line(fd);
+	}
 }
 
 int	close1(int keysym, t_vars *vars)

@@ -5,7 +5,7 @@ PRINTFPATH = ft_printf/
 PRINTFLIB = ft_printf/libftprintf.a
 LIBFTPATH = libft/
 LIBFTLIB = libft/libft.a
-SRC= game.c
+SRC= game.c Get_next_line/get_next_line.c Get_next_line/get_next_line_utils.c
 OBJ= ${SRC:%.c=%.o}
 
 all: ${NAME}
