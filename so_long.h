@@ -6,7 +6,7 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:13:50 by mdursun           #+#    #+#             */
-/*   Updated: 2025/02/09 18:28:08 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/03/22 15:56:47 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ typedef struct	s_vars {
 	void		*mlx;
 	void		*win;
 	t_images	img;
+	char		**map;
 }				t_vars;
 # include "./minilibx-linux/mlx_int.h"
 # include "./minilibx-linux/mlx.h"

@@ -6,20 +6,13 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:34:03 by mdursun           #+#    #+#             */
-/*   Updated: 2025/03/16 19:20:48 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/03/22 16:08:01 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 #include "Get_next_line/get_next_line.h"
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
-}
 
 int	create_trgb(int t, int r, int g, int b)
 {
@@ -66,9 +59,28 @@ char **checkmap(char *path)
 		ft_strncpy (*map, line, ft_strlen(line));
 		*((map[i]) + ft_strlen(line)) = 0;
 		ft_strtrim(map[i]," ");
+		ft_strtrim(map[i],"\n");
 		line = get_next_line(fd);
 	}
 	return (map);
+}
+
+void	render_img (t_vars *vars)
+{
+	int	i = strlen(*(vars -> map));
+	int j = getcol("map.ber");
+
+	while (i--)
+	{
+		while (j--)
+		{
+			
+		}
+		
+	}
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.map.img, 600, 300);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.map.img, 600, 664);
+	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.player.img, vars->img.player.x, vars->img.player.y);
 }
 
 int	close1(int keysym, t_vars *vars)
@@ -91,44 +103,38 @@ int	close1(int keysym, t_vars *vars)
 	if (keysym == XK_d)
 		vars->img.player.x += 64;
 	mlx_clear_window(vars->mlx, vars->win);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.map.img, 0, 0);
-	mlx_put_image_to_window(vars->mlx, vars->win, vars->img.player.img, vars->img.player.x, vars->img.player.y);
+	render_img(vars);
+
 }
 
+
+t_vars init_img()
+{
+	
+}
 int	main(int argc, char *argv[])
 {
 	t_vars vars;
 
-	int a = 64;
-	int b = 64;
-	int i = 0;
-	int j = 0;
-	size_t z = 0;
-	size_t k = 0;
-	char **mapp;
+	int a = 100;
+	int b = 100;
+	int z = 1;
+	int k = 1;
 
-	mapp = checkmap("./map.ber");
-	z = 0;
-	k = 0;
+	vars.map = checkmap("./map.ber");
+	
 	vars.img.player.x = 600;
 	vars.img.player.y = 300;
+	vars.img.map.x = 600;
+	vars.img.map.y = 300;
 	(vars.mlx = mlx_init());
 	(vars.win = mlx_new_window(vars.mlx, 1920, 1080, "Hello world!"));
-	vars.img.map.img = mlx_new_image(vars.mlx, 1920, 1080);
+	vars.img.map.img = mlx_xpm_file_to_image(vars.mlx, "wall.xpm", &k,&z);
 	vars.img.player.img = mlx_xpm_file_to_image(vars.mlx, "pacman.xpm", &a , &b);
 	vars.img.map.addr = mlx_get_data_addr(vars.img.map.img, &vars.img.map.bits_per_pixel, &vars.img.map.line_length, &vars.img.map.endian);
 	vars.img.player.addr = mlx_get_data_addr(vars.img.player.img, &vars.img.player.bits_per_pixel, &vars.img.player.line_length, &vars.img.player.endian);
-	while (k < 900)
-	{
-			while (z < 680)
-			{
-				my_mlx_pixel_put(&vars.img.map, k + 400, z + 150, create_trgb(0,230,24,46));
-				z++;
-			}
-			k++;
-	}
-	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.map.img, 0, 0);
 	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.player.img, vars.img.player.x, vars.img.player.y);
+	mlx_put_image_to_window(vars.mlx, vars.win, vars.img.map.img, vars.img.map.x, vars.img.map.y);
 	mlx_key_hook(vars.win, close1, &vars);
 	mlx_loop(vars.mlx);
 	return (0);
