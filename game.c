@@ -74,7 +74,10 @@ void	render_img (t_vars *vars)
 	{
 		while (j--)
 		{
-			
+			if (*((vars-> map) + j))
+			{
+				
+			} 
 		}
 		
 	}

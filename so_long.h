@@ -35,8 +35,8 @@ typedef struct	s_vars {
 	t_images	img;
 	char		**map;
 }				t_vars;
-# include "./minilibx-linux/mlx_int.h"
-# include "./minilibx-linux/mlx.h"
+# include "./lib/minilibx-linux/mlx_int.h"
+# include "./lib/minilibx-linux/mlx.h"
 # include "ft_printf/ft_printf.h"
 # include "libft/libft.h"
 # include "math.h"

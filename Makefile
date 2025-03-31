@@ -12,7 +12,7 @@ all: ${NAME}
 
 
 $(NAME): $(OBJ) ${PRINTFLIB} ${LIBFTLIB}
-	$(CC) $(OBJ) ${PRINTFLIB} ${LIBFTLIB} -L/home/mdursun/Desktop/mlx/minilibx_linux -lmlx_Linux -L/home/mdursun/Desktop/mlx/minilibx-linux -I/home/mdursun/Desktop/mlx/minilibx-linux -lXext -lX11 -lm -lz -o $(NAME)
+	$(CC) $(OBJ) ${PRINTFLIB} ${LIBFTLIB} -L/home/ogi/Desktop/so_long/lib/minilibx -lmlx_Linux -L/home/ogi/Desktop/so_long/lib/minilibx -I/home/ogi/Desktop/so_long/lib/minilibx -lXext -lX11 -lm -lz -o $(NAME)
 
 ${PRINTFLIB} : 
 	@make -C ${PRINTFPATH}
@@ -29,5 +29,9 @@ fclean :
 	@make -C ${PRINTFPATH} fclean
 	@make -C ${LIBFTPATH} fclean
 	@rm -rf  ${OBJ} ${NAME}
+minilibx:
+	@echo "...cloning minilibx..."
+	@git clone https://github.com/42paris/minilibx-linux.git ./lib/minilibx > /dev/null 2>&1; 
+	@make -C ./lib/minilibx > /dev/null 2>&1
 
-re : fclean all clean
+re : fclean all clean minilibx
