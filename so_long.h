@@ -6,7 +6,7 @@
 /*   By: mdursun <mdursun@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/08 17:13:50 by mdursun           #+#    #+#             */
-/*   Updated: 2025/03/22 15:56:47 by mdursun          ###   ########.fr       */
+/*   Updated: 2025/04/13 17:31:57 by mdursun          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@ typedef struct	s_data {
 typedef struct	s_images {
 	t_data	player;
 	t_data	map;
+	t_data	wall;
+	t_data	exit;
+	t_data	cc;
 }				t_images;
 typedef struct	s_vars {
 	void		*mlx;
