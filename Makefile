@@ -1,11 +1,11 @@
 NAME= so_long
 CC=gcc
-# CFLAGS= -Wall -Wextra -Werror
+CFLAGS= -Wall -Wextra -Werror -g
 PRINTFPATH = ft_printf/
 PRINTFLIB = ft_printf/libftprintf.a
 LIBFTPATH = libft/
 LIBFTLIB = libft/libft.a
-SRC= game.c Get_next_line/get_next_line.c Get_next_line/get_next_line_utils.c
+SRC= game.c Get_next_line/get_next_line.c Get_next_line/get_next_line_utils.c map_check.c flood.c
 OBJ= ${SRC:%.c=%.o}
 
 all: ${NAME}
